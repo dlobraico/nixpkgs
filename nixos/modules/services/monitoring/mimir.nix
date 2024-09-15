@@ -37,6 +37,14 @@ in {
         which get escaped and are then passed to Mimir.
       '';
     };
+
+    dataDir = mkOption {
+      type = types.path;
+      default = "/var/lib/mimir";
+      description = ''
+        Specify the directory for Mimir.
+      '';
+    };
   };
 
   config = mkIf cfg.enable {
@@ -71,7 +79,7 @@ in {
         ProtectSystem = "full";
         DevicePolicy = "closed";
         NoNewPrivileges = true;
-        WorkingDirectory = "/var/lib/mimir";
+        WorkingDirectory = cfg.dataDir;
         StateDirectory = "mimir";
       };
     };
